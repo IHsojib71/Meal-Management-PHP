@@ -16,4 +16,4 @@
 4) Type "localhost/meal_management" in your browser
 
 
-I am still working on Monthly Report and Edit meal and cost system. Stay tuned!
+I am still working on Edit meal and cost. Stay tuned!
