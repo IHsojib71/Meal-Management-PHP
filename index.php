@@ -171,7 +171,7 @@ switch ($state) {
                 if ($user_filter != "") {
                     $filter .= " AND costby_userid='$user_filter' ";
                 }
-
+//filter for meal_tbl
                 $filter_meal = " id!=''";
                 $month_filter = isset($_REQUEST['month']) ? $_REQUEST['month'] : "";
                 $year_filter = isset($_REQUEST['year']) ? $_REQUEST['year'] : "";
@@ -183,12 +183,12 @@ switch ($state) {
                     $filter_meal .= " AND YEAR(date)='$year_filter' ";
                 }
                 if ($user_filter != "") {
-                    $filter_meal .= " AND costby_userid='$user_filter' ";
+                    $filter_meal .= " AND user_id='$user_filter' ";
                 }
         
                 echo '@#$';
-                show_cost_list();
-                cost_list_table();
+                show_monthly_report();
+                monthly_report_table();
                 echo '@#$';
                 break;
     case 'get_details_byID':
@@ -601,6 +601,81 @@ function show_monthly_report(){
         <input type="button" name="filter_btn" id="filter_btn" value="Filter" onclick="monthly_report_filter();">
     </form>
     <br>
+<?php }
+function monthly_report_table(){
+    ?>
+    <h1>Meal Report</h1>
+<table border="1" style="width: 90%;border-collapse:collapse;">
+        <tr style="background-color: green;color:white;">
+            <th>S.N.</th>
+            <th>Name</th>
+            <th>Breakfast</th>
+            <th>Lunch</th>
+            <th>Dinner</th>
+            <th>Date</th>
+            <th>Remarks</th>
+        </tr>
+        <?php
+        global $filter,$filter_meal, $con;
+        $q = "SELECT user_name,breakfast,lunch,dinner,date,remarks FROM meal_tbl WHERE $filter_meal";
+        // echo $q;
+        $res = mysqli_query($con, $q);
+
+
+        $count = 0;
+        while ($com = mysqli_fetch_assoc($res)) {
+            $count++;
+        ?>
+            <tr>
+                <td><?php echo $count; ?></td>
+                <td><?php echo $com['user_name']; ?></td>
+                <td><?php echo $com['breakfast']; ?></td>
+                <td><?php echo $com['lunch']; ?></td>
+                <td><?php echo $com['dinner']; ?></td>
+                <td><?php echo $com['date']; ?></td>
+                <td><?php echo $com['remarks']; ?></td>
+               
+            </tr>
+
+        <?php    }  ?>
+
+
+    </table>
+            <h1>Cost Report</h1>
+    <table border="1" style="width: 90%;border-collapse:collapse;">
+    <tr style="background-color: green;color:white;">
+            <th>S.N.</th>
+            <th>Name</th>
+            <th>Cost</th>
+            <th>Date</th>
+            <th>Remarks</th>
+        </tr>
+
+        <?php
+        $qq = "SELECT costby_name,amount,date,remark FROM cost_tbl WHERE $filter";
+        // echo $qq;
+        $res = mysqli_query($con, $qq);
+
+
+        $count = 0;
+        while ($com = mysqli_fetch_assoc($res)) {
+            $count++;
+        ?>
+            <tr>
+                <td><?php echo $count; ?></td>
+                <td><?php echo $com['costby_name']; ?></td>
+                <td><?php echo $com['amount']; ?></td>
+                <td><?php echo $com['date']; ?></td>
+                <td><?php echo $com['remark']; ?></td>
+               
+            </tr>
+
+        <?php    }  ?>
+    </table>
+
+
+
+
 <?php }
 function about()
 {
