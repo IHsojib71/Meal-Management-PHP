@@ -8,6 +8,7 @@
 <img src="images/7.png">
 <img src="images/8.png">
 <img src="images/9.png">
+<img src="images/10.png">
 
 1) Download or clone the project and place it inside htdocs/www depending on(xampp/mamp/wamp)
 2) Download database .sql file and create a database called "meal_management" and import the database
